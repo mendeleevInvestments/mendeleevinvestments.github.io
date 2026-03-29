@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mendeleev Investments</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Calibri:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --black: #111110;
+  --ink: #222220;
+  --mid: #6B6860;
+  --muted: #A09D98;
+  --rule: #E2DFD9;
+  --parchment: #F7F5F0;
+  --cream: #FDFCFA;
+  --white: #FFFFFF;
+}
+
+html, body {
+  height: 100%;
+  background: var(--parchment);
+  color: var(--black);
+  font-family: Calibri, sans-serif;
+  overflow: hidden;
+  cursor: default;
+}
+
+/* ── PAGE GRID ────────────────────────────── */
+.page {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 52% 1px 1fr;
+  grid-template-rows: auto 1fr auto;
+}
+
+/* ── HEADER ───────────────────────────────── */
+header {
+  grid-column: 1/-1;
+  background: var(--cream);
+  border-bottom: 1px solid var(--rule);
+  padding: 0 3rem;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo-img { height: 44px; width: auto; }
+
+.logo-name {
+  font-family: "Playfair Display", serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--black);
+  line-height: 1;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.nav-link {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mid);
+  text-decoration: none;
+  padding: 0.5rem 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  transition: color 0.2s;
+  border: 1px solid transparent;
+}
+
+.nav-link:hover { color: var(--black); }
+.nav-link svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+.nav-link.cta {
+  background: var(--black);
+  color: var(--white);
+  border-color: var(--black);
+  margin-left: 0.6rem;
+  padding: 0.5rem 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  transition: background 0.2s;
+}
+.nav-link.cta:hover { background: var(--ink); color: var(--white); }
+
+/* ── LEFT PANEL ───────────────────────────── */
+.left {
+  grid-column: 1;
+  grid-row: 2;
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 3.5rem 3.5rem 3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Big decorative element tree silhouette feel */
+.left-deco {
+  position: absolute;
+  bottom: -60px;
+  right: -40px;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  border: 1px solid var(--rule);
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.left-deco::before {
+  content: "";
+  position: absolute;
+  inset: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--rule);
+}
+
+.left-deco::after {
+  content: "";
+  position: absolute;
+  inset: 60px;
+  border-radius: 50%;
+  border: 1px solid var(--rule);
+}
+
+.left-top { position: relative; z-index: 1; }
+.left-bottom { position: relative; z-index: 1; }
+
+/* Periodic table element style badge */
+.element-badge {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1.5px solid var(--black);
+  width: 56px;
+  padding: 5px 6px;
+  margin-bottom: 2rem;
+}
+
+.el-number { font-size: 0.55rem; letter-spacing: 0.05em; color: var(--mid); line-height: 1; align-self: flex-start; }
+.el-symbol { font-family: "Playfair Display", serif; font-size: 1.5rem; font-weight: 700; color: var(--black); line-height: 1; }
+.el-name { font-size: 0.42rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); line-height: 1; margin-top: 2px; }
+
+.science-line {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(1.5rem, 2.4vw, 2.3rem);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.3;
+  color: var(--black);
+  margin-bottom: 0.9rem;
+  max-width: 440px;
+}
+
+.science-sub {
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 2.5rem;
+}
+
+.amfi-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--rule);
+  background: var(--parchment);
+  margin-bottom: 2.5rem;
+}
+
+.amfi-line svg { width: 11px; height: 11px; }
+
+.contact-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  border-top: 1px solid var(--rule);
+  padding-top: 1.6rem;
+}
+
+.c-item {
+  font-size: 0.8rem;
+  color: var(--mid);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  transition: color 0.18s;
+  letter-spacing: 0.01em;
+}
+
+.c-item:hover { color: var(--black); }
+.c-item svg { width: 12px; height: 12px; flex-shrink: 0; opacity: 0.45; }
+
+/* ── VERTICAL DIVIDER ─────────────────────── */
+.v-div {
+  grid-column: 2;
+  grid-row: 2;
+  background: var(--rule);
+}
+
+/* ── RIGHT PANEL ──────────────────────────── */
+.right {
+  grid-column: 3;
+  grid-row: 2;
+  background: var(--parchment);
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 2.5rem;
+  overflow-y: auto;
+}
+
+.calc-eyebrow {
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.calc-eyebrow::before {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 1px;
+  background: var(--muted);
+}
+
+/* Tabs styled as periodic element selectors */
+.tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 4px;
+  margin-bottom: 1.4rem;
+}
+
+.tab {
+  font-family: Calibri, sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.55rem 0.3rem;
+  border: 1px solid var(--rule);
+  background: var(--cream);
+  color: var(--muted);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.18s;
+  line-height: 1.3;
+}
+
+.tab:hover { border-color: var(--black); color: var(--black); }
+.tab.active { background: var(--black); color: var(--white); border-color: var(--black); }
+
+/* Fields */
+.calc-panel { display: none; flex-direction: column; gap: 0.75rem; }
+.calc-panel.active { display: flex; }
+
+.field { display: flex; flex-direction: column; gap: 0.28rem; }
+.field label { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.field input, .field select {
+  font-family: Calibri, sans-serif;
+  font-size: 0.9rem;
+  color: var(--black);
+  background: var(--white);
+  border: 1px solid var(--rule);
+  padding: 0.55rem 0.8rem;
+  outline: none;
+  transition: border-color 0.18s;
+  width: 100%;
+  border-radius: 0;
+  -webkit-appearance: none;
+}
+
+.field input:focus, .field select:focus { border-color: var(--black); }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+
+.calc-btn {
+  font-family: Calibri, sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  padding: 0.8rem;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.18s;
+  font-weight: 700;
+}
+
+.calc-btn:hover { background: var(--ink); }
+
+/* Result */
+.result-box { display: none; border: 1px solid var(--rule); background: var(--white); margin-top: 0.2rem; }
+.result-box.show { display: block; }
+.result-grid { display: grid; }
+.cols2 { grid-template-columns: 1fr 1fr; }
+.cols3 { grid-template-columns: 1fr 1fr 1fr; }
+.cols4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+.r-item { padding: 0.75rem 0.8rem; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.r-item:last-child { border-right: none; }
+.r-label { font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.25rem; }
+.r-val { font-family: "Playfair Display", serif; font-size: 1.05rem; font-weight: 500; color: var(--black); }
+.r-val.neg { color: #8B2020; }
+.r-val.pos { color: #1F5C35; }
+.r-insight { padding: 0.7rem 0.9rem; font-size: 0.74rem; color: var(--mid); line-height: 1.65; border-bottom: 1px solid var(--rule); font-style: italic; }
+.r-note { padding: 0.45rem 0.9rem; font-size: 0.58rem; color: var(--muted); letter-spacing: 0.03em; }
+
+/* ── FOOTER ───────────────────────────────── */
+footer {
+  grid-column: 1/-1;
+  background: var(--cream);
+  border-top: 1px solid var(--rule);
+  padding: 0.85rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.foot-l { font-size: 0.63rem; color: var(--muted); letter-spacing: 0.04em; }
+.foot-r { font-size: 0.63rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+/* Fade-in on load */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.left-top { animation: fadeUp 0.6s ease both; }
+.left-bottom { animation: fadeUp 0.6s 0.15s ease both; }
+.right { animation: fadeUp 0.6s 0.1s ease both; }
+
+/* ── RESPONSIVE ───────────────────────────── */
+@media (max-width: 900px) {
+  html, body { overflow: auto; }
+  .page { height: auto; grid-template-columns: 1fr; grid-template-rows: auto; }
+  header { padding: 0 1.5rem; height: auto; min-height: 60px; }
+  .v-div { display: none; }
+  .left { grid-column: 1; grid-row: 2; padding: 2rem 1.5rem; }
+  .right { grid-column: 1; grid-row: 3; padding: 1.5rem; }
+  footer { grid-column: 1; grid-row: 4; flex-direction: column; gap: 0.3rem; text-align: center; padding: 0.8rem 1.5rem; }
+  .field-row { grid-template-columns: 1fr; }
+  .cols4 { grid-template-columns: 1fr 1fr; }
+  .tabs { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HEADER -->
+<header>
+  <div class="logo-area">
+    <img src="data:image/jpeg;base64,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" alt="Mendeleev Investments" class="logo-img">
+    <div class="logo-name">Mendeleev Investments</div>
+  </div>
+  <nav class="header-nav">
+    <a href="https://www.linkedin.com/company/mendeleev-investments/" target="_blank" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45C23.21 24 24 23.23 24 22.27V1.73C24 .77 23.21 0 22.22 0z"/></svg>
+      LinkedIn
+    </a>
+    <a href="https://substack.com/@mendeleevinvestments?utm_campaign=profile&utm_medium=profile-page" target="_blank" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
+      Substack
+    </a>
+    <a href="https://forms.gle/sF36wzDDNMqhpFFw7" target="_blank" class="nav-link cta">Book an Appointment</a>
+  </nav>
+</header>
+
+<!-- LEFT -->
+<section class="left">
+  <div class="left-deco"></div>
+
+  <div class="left-top">
+    <!-- Periodic table style badge — Mn = Mendeleev, atomic feel -->
+    <div class="element-badge">
+      <span class="el-number">25</span>
+      <span class="el-symbol">Mn</span>
+      <span class="el-name">Mendeleev</span>
+    </div>
+
+    <p class="science-line">We study the elements of wealth, so the reactions work in your favour.</p>
+    <p class="science-sub">The Science of Mutual Funds</p>
+
+    <div class="amfi-line">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      AMFI Registered Mutual Fund Distributor
+    </div>
+  </div>
+
+  <div class="left-bottom">
+    <div class="contact-col">
+      <a href="mailto:prince@mendeleevinvestments.com" class="c-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        prince@mendeleevinvestments.com
+      </a>
+      <a href="tel:+917357533821" class="c-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+        +91 73575 33821
+      </a>
+      <span class="c-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Jodhpur, Rajasthan
+      </span>
+    </div>
+  </div>
+</section>
+
+<div class="v-div"></div>
+
+<!-- RIGHT -->
+<section class="right">
+  <div class="calc-eyebrow">Financial Calculators</div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('delay',this)">Cost of<br>Delay</button>
+    <button class="tab" onclick="switchTab('lifestyle',this)">Lifestyle<br>Inflation</button>
+    <button class="tab" onclick="switchTab('freedom',this)">Freedom<br>Number</button>
+    <button class="tab" onclick="switchTab('tax',this)">Tax<br>Drag</button>
+  </div>
+
+  <!-- 1. COST OF DELAY -->
+  <div id="delay-calc" class="calc-panel active">
+    <div class="field-row">
+      <div class="field"><label>Monthly SIP (₹)</label><input type="number" id="d-amt" placeholder="10000" min="100"></div>
+      <div class="field"><label>Expected Return (% p.a.)</label><input type="number" id="d-rate" placeholder="12" min="1" max="30" step="0.5"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Invest For (Years)</label><input type="number" id="d-yr" placeholder="20" min="1" max="50"></div>
+      <div class="field"><label>Years You Plan to Delay</label><input type="number" id="d-delay" placeholder="3" min="1" max="20"></div>
+    </div>
+    <button class="calc-btn" onclick="calcDelay()">Show the Cost of Waiting</button>
+    <div class="result-box" id="delay-result">
+      <div class="result-grid cols2">
+        <div class="r-item"><div class="r-label">If You Start Today</div><div class="r-val pos" id="d-now">0</div></div>
+        <div class="r-item"><div class="r-label">If You Delay</div><div class="r-val" id="d-later">0</div></div>
+      </div>
+      <div class="result-grid cols2">
+        <div class="r-item" style="border-bottom:none"><div class="r-label">Wealth Permanently Lost</div><div class="r-val neg" id="d-loss">0</div></div>
+        <div class="r-item" style="border-bottom:none"><div class="r-label">Cost Per Year of Delay</div><div class="r-val neg" id="d-peryear">0</div></div>
+      </div>
+      <div class="r-insight" id="d-insight"></div>
+      <div class="r-note">Estimated figures. Actual returns depend on market conditions.</div>
+    </div>
+  </div>
+
+  <!-- 2. LIFESTYLE INFLATION -->
+  <div id="lifestyle-calc" class="calc-panel">
+    <div class="field-row">
+      <div class="field"><label>Monthly Expenses Today (₹)</label><input type="number" id="l-exp" placeholder="50000" min="1000"></div>
+      <div class="field"><label>Lifestyle Inflation Rate (%)</label><input type="number" id="l-rate" placeholder="7" min="1" max="25" step="0.5"></div>
+    </div>
+    <div class="field">
+      <label>Project Over</label>
+      <select id="l-yr">
+        <option value="10">10 Years</option>
+        <option value="20" selected>20 Years</option>
+        <option value="30">30 Years</option>
+      </select>
+    </div>
+    <button class="calc-btn" onclick="calcLifestyle()">Show Inflation Impact</button>
+    <div class="result-box" id="lifestyle-result">
+      <div class="result-grid cols3">
+        <div class="r-item"><div class="r-label">Expenses Today</div><div class="r-val" id="l-now">0</div></div>
+        <div class="r-item"><div class="r-label">Expenses in <span id="l-yr-label">20</span> Yrs</div><div class="r-val neg" id="l-future">0</div></div>
+        <div class="r-item" style="border-bottom:none"><div class="r-label">Extra Needed/Month</div><div class="r-val neg" id="l-extra">0</div></div>
+      </div>
+      <div class="r-insight" id="l-insight"></div>
+      <div class="r-note">Illustrative. Actual inflation varies by lifestyle and category.</div>
+    </div>
+  </div>
+
+  <!-- 3. FREEDOM NUMBER -->
+  <div id="freedom-calc" class="calc-panel">
+    <div class="field-row">
+      <div class="field"><label>Monthly Expenses (₹)</label><input type="number" id="f-exp" placeholder="80000" min="1000"></div>
+      <div class="field"><label>Your Current Age</label><input type="number" id="f-age" placeholder="30" min="18" max="70"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Inflation Rate (% p.a.)</label><input type="number" id="f-inf" placeholder="6" min="1" max="15" step="0.5"></div>
+      <div class="field"><label>Safe Withdrawal Rate (%)</label><input type="number" id="f-swr" placeholder="4" min="1" max="10" step="0.5"></div>
+    </div>
+    <button class="calc-btn" onclick="calcFreedom()">Find My Freedom Number</button>
+    <div class="result-box" id="freedom-result">
+      <div class="result-grid cols2">
+        <div class="r-item"><div class="r-label">Your Freedom Number</div><div class="r-val pos" id="f-num">0</div></div>
+        <div class="r-item" style="border-bottom:none"><div class="r-label">Annual Expenses Covered</div><div class="r-val" id="f-annual">0</div></div>
+      </div>
+      <div class="r-insight" id="f-insight"></div>
+      <div class="r-note">Based on the 4% rule. Safe withdrawal rate is how much you can withdraw annually without depleting corpus.</div>
+    </div>
+  </div>
+
+  <!-- 4. TAX DRAG -->
+  <div id="tax-calc" class="calc-panel">
+    <div class="field-row">
+      <div class="field"><label>Investment Amount (₹)</label><input type="number" id="t-amt" placeholder="100000" min="1000"></div>
+      <div class="field"><label>Investment Period (Years)</label><input type="number" id="t-yr" placeholder="5" min="1" max="30"></div>
+    </div>
+    <div class="field">
+      <label>Your Income Tax Slab</label>
+      <select id="t-slab">
+        <option value="0.05">5%</option>
+        <option value="0.10">10%</option>
+        <option value="0.20">20%</option>
+        <option value="0.30" selected>30%</option>
+      </select>
+    </div>
+    <button class="calc-btn" onclick="calcTax()">Compare Post-Tax Returns</button>
+    <div class="result-box" id="tax-result">
+      <div class="result-grid cols4">
+        <div class="r-item"><div class="r-label">FD (Post-Tax)</div><div class="r-val" id="t-fd">0</div></div>
+        <div class="r-item"><div class="r-label">Debt MF (Post-Tax)</div><div class="r-val" id="t-debt">0</div></div>
+        <div class="r-item"><div class="r-label">ELSS (Post-Tax)</div><div class="r-val pos" id="t-elss">0</div></div>
+        <div class="r-item" style="border-bottom:none"><div class="r-label">PPF (Tax-Free)</div><div class="r-val pos" id="t-ppf">0</div></div>
+      </div>
+      <div class="r-insight" id="t-insight"></div>
+      <div class="r-note">FD: taxed at slab rate annually. Debt MF: 20% LTCG after 3 yrs. ELSS: 10% LTCG above 1L after 3-yr lock-in. PPF: 7.1% p.a., fully exempt.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-l">AMFI Registered Mutual Fund Distributor &middot; Not a SEBI Registered Investment Advisor</div>
+  <div class="foot-r">Jodhpur &middot; Rajasthan &middot; India</div>
+</footer>
+</div>
+
+<script>
+function fmt(n) {
+  if (isNaN(n) || !isFinite(n)) return "N/A";
+  const abs = Math.abs(n), sign = n < 0 ? "-" : "";
+  if (abs >= 10000000) return sign + "₹" + (abs/10000000).toFixed(2) + " Cr";
+  if (abs >= 100000)   return sign + "₹" + (abs/100000).toFixed(2) + " L";
+  if (abs >= 1000)     return sign + "₹" + (abs/1000).toFixed(1) + "K";
+  return sign + "₹" + Math.round(abs);
+}
+
+function sipFV(monthly, ratePA, years) {
+  const r = ratePA / 100 / 12, n = years * 12;
+  if (r === 0) return monthly * n;
+  return monthly * ((Math.pow(1+r,n)-1)/r) * (1+r);
+}
+
+function switchTab(tab, btn) {
+  document.querySelectorAll(".tab").forEach(b => b.classList.remove("active"));
+  document.querySelectorAll(".calc-panel").forEach(p => p.classList.remove("active"));
+  btn.classList.add("active");
+  document.getElementById(tab+"-calc").classList.add("active");
+}
+
+function calcDelay() {
+  const amt = parseFloat(document.getElementById("d-amt").value);
+  const rate = parseFloat(document.getElementById("d-rate").value);
+  const yr = parseFloat(document.getElementById("d-yr").value);
+  const delay = parseFloat(document.getElementById("d-delay").value);
+  if (!amt||!rate||!yr||!delay) { alert("Please fill all fields"); return; }
+  const nowVal = sipFV(amt, rate, yr);
+  const laterVal = sipFV(amt, rate, yr - delay);
+  const loss = nowVal - laterVal;
+  document.getElementById("d-now").textContent = fmt(nowVal);
+  document.getElementById("d-later").textContent = fmt(laterVal);
+  document.getElementById("d-loss").textContent = fmt(loss);
+  document.getElementById("d-peryear").textContent = fmt(loss/delay);
+  const pct = ((loss/nowVal)*100).toFixed(1);
+  document.getElementById("d-insight").textContent = "Delaying " + delay + " year" + (delay>1?"s":"") + " costs you " + pct + "% of your potential wealth. That is " + fmt(loss) + " permanently lost to inaction, not market risk.";
+  document.getElementById("delay-result").classList.add("show");
+}
+
+function calcLifestyle() {
+  const exp = parseFloat(document.getElementById("l-exp").value);
+  const rate = parseFloat(document.getElementById("l-rate").value);
+  const yr = parseFloat(document.getElementById("l-yr").value);
+  if (!exp||!rate) { alert("Please fill all fields"); return; }
+  const future = exp * Math.pow(1+rate/100, yr);
+  const extra = future - exp;
+  document.getElementById("l-yr-label").textContent = yr;
+  document.getElementById("l-now").textContent = fmt(exp)+"/mo";
+  document.getElementById("l-future").textContent = fmt(future)+"/mo";
+  document.getElementById("l-extra").textContent = fmt(extra)+"/mo";
+  const mult = (future/exp).toFixed(1);
+  document.getElementById("l-insight").textContent = "At " + rate + "% lifestyle inflation, your expenses grow " + mult + "x in " + yr + " years. What costs " + fmt(exp) + " today will cost " + fmt(future) + " per month. Inflation is silent, but it is always compounding.";
+  document.getElementById("lifestyle-result").classList.add("show");
+}
+
+function calcFreedom() {
+  const exp = parseFloat(document.getElementById("f-exp").value);
+  const age = parseFloat(document.getElementById("f-age").value);
+  const inf = parseFloat(document.getElementById("f-inf").value);
+  const swr = parseFloat(document.getElementById("f-swr").value);
+  if (!exp||!age||!inf||!swr) { alert("Please fill all fields"); return; }
+  const annualExp = exp * 12;
+  const freedomNum = annualExp / (swr/100);
+  document.getElementById("f-num").textContent = fmt(freedomNum);
+  document.getElementById("f-annual").textContent = fmt(annualExp)+"/yr";
+  document.getElementById("f-insight").textContent = "When your corpus reaches " + fmt(freedomNum) + ", it generates enough at " + swr + "% withdrawal to cover " + fmt(exp) + " per month indefinitely. That is the number at which work becomes optional.";
+  document.getElementById("freedom-result").classList.add("show");
+}
+
+function calcTax() {
+  const amt = parseFloat(document.getElementById("t-amt").value);
+  const yr = parseFloat(document.getElementById("t-yr").value);
+  const slab = parseFloat(document.getElementById("t-slab").value);
+  if (!amt||!yr) { alert("Please fill all fields"); return; }
+  const fdRate = 0.07, fdPostRate = fdRate*(1-slab);
+  const fdFV = amt * Math.pow(1+fdPostRate, yr);
+  const debtRate = 0.075;
+  const debtFV_gross = amt * Math.pow(1+debtRate, yr);
+  const debtGain = debtFV_gross - amt;
+  const debtTax = yr >= 3 ? debtGain*0.20 : debtGain*slab;
+  const debtFV = debtFV_gross - debtTax;
+  const elssRate = 0.12;
+  const elssFV_gross = amt * Math.pow(1+elssRate, yr);
+  const elssGain = elssFV_gross - amt;
+  const taxableElss = Math.max(0, elssGain - 100000);
+  const elssTax = yr >= 3 ? taxableElss*0.10 : elssGain*slab;
+  const elssFV = elssFV_gross - elssTax;
+  const ppfFV = amt * Math.pow(1+0.071, yr);
+  document.getElementById("t-fd").textContent = fmt(fdFV);
+  document.getElementById("t-debt").textContent = fmt(debtFV);
+  document.getElementById("t-elss").textContent = fmt(elssFV);
+  document.getElementById("t-ppf").textContent = fmt(ppfFV);
+  const best = Math.max(fdFV,debtFV,elssFV,ppfFV);
+  const worst = Math.min(fdFV,debtFV,elssFV,ppfFV);
+  const slabPct = Math.round(slab*100);
+  document.getElementById("t-insight").textContent = "At " + slabPct + "% tax slab, the gap between best and worst instrument is " + fmt(best-worst) + " over " + yr + " years. The FD you call safe costs you the most. Tax efficiency is a return in itself.";
+  document.getElementById("tax-result").classList.add("show");
+}
+</script>
+</body>
+</html>
